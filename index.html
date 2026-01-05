@@ -4,174 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ERG 個人部落格</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body {
+body{
   margin:0;
-  font-family:'Noto Sans TC', sans-serif;
-  background: linear-gradient(135deg,#0f172a,#020617);
+  font-family:'Noto Sans TC',sans-serif;
+  background:linear-gradient(135deg,#0f172a,#020617);
   color:#e5e7eb;
 }
-nav {
+
+/* 導覽列 */
+nav{
   position:sticky;
   top:0;
-  background: rgba(2,6,23,0.95);
-  padding: 16px 24px;
+  z-index:50;
+  background:rgba(2,6,23,.95);
+  backdrop-filter:blur(10px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  z-index:10;
-  backdrop-filter: blur(10px);
-  border-bottom:1px solid #1f2933;
+  padding:16px 28px;
+  border-bottom:1px solid #1f2937;
 }
-nav a {
-  margin-left:16px;
-  cursor:pointer;
+
+.nav-menu{
+  list-style:none;
+  display:flex;
+  gap:24px;
+  margin:0;
+  padding:0;
+}
+
+.nav-menu a,
+.dropdown-title{
   color:#e5e7eb;
+  cursor:pointer;
   text-decoration:none;
-  opacity:0.8;
   position:relative;
-  transition:0.2s;
+  padding:6px 2px;
+  opacity:.85;
 }
-/* hover 動畫 */
-nav a::after {
+
+/* hover 底線 */
+.nav-menu a::after,
+.dropdown-title::after{
   content:'';
   position:absolute;
-  width:0;
-  height:2px;
   left:0;
   bottom:-4px;
+  width:0;
+  height:2px;
   background:#818cf8;
-  transition:width 0.3s ease;
+  transition:.3s;
 }
-nav a:hover {
-  opacity:1;
+
+.nav-menu a:hover,
+.dropdown-title:hover{
   color:#818cf8;
+  opacity:1;
 }
-nav a:hover::after {
+
+.nav-menu a:hover::after,
+.dropdown-title:hover::after{
   width:100%;
 }
-.container {
+
+/* 下拉選單 */
+.dropdown{
+  position:relative;
+}
+
+.dropdown-menu{
+  position:absolute;
+  top:140%;
+  left:0;
+  background:#fff;
+  color:#111;
+  min-width:180px;
+  border-radius:14px;
+  box-shadow:0 16px 40px rgba(0,0,0,.2);
+  padding:8px 0;
+  opacity:0;
+  transform:translateY(-10px);
+  pointer-events:none;
+  transition:.25s ease;
+}
+
+.dropdown:hover .dropdown-menu{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.dropdown-menu li{
+  list-style:none;
+}
+
+.dropdown-menu a{
+  display:block;
+  padding:12px 18px;
+  color:#111;
+}
+
+.dropdown-menu a:hover{
+  background:#f1f5f9;
+}
+
+/* 主內容 */
+.container{
   max-width:1100px;
   margin:auto;
-  padding:48px 24px;
+  padding:64px 24px;
 }
-.hidden { display:none; }
-.hero {
+
+.hero{
   text-align:center;
-  margin-bottom:64px;
-  animation: fadeIn 1s ease;
+  margin-bottom:80px;
 }
-.hero h1 { font-size:48px; margin-bottom:12px; }
-.hero span { color:#818cf8; }
-.hero p { color:#9ca3af; font-size:18px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
-.card {
-  background: rgba(15,23,42,0.85);
+
+.hero h1{
+  font-size:48px;
+}
+
+.hero span{
+  color:#818cf8;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+
+.card{
+  background:rgba(15,23,42,.85);
   border:1px solid #1f2937;
-  border-radius:16px;
-  padding:24px;
-  cursor:pointer;
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  border-radius:18px;
+  padding:28px;
+  transition:.3s;
 }
-.card:hover {
-  transform:translateY(-5px);
+
+.card:hover{
+  transform:translateY(-6px);
   border-color:#6366f1;
-  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  box-shadow:0 12px 24px rgba(0,0,0,.3);
 }
-.card h3 { margin-top:0; font-size:20px; }
-.card p { color:#9ca3af; font-size:14px; }
-article {
-  max-width:800px;
-  margin:auto;
-  line-height:1.8;
-  animation: fadeIn 0.8s ease;
-}
-article h2 { font-size:36px; margin-bottom:12px; }
-.back {
-  display:inline-block;
-  margin-bottom:24px;
-  opacity:0.8;
-  cursor:pointer;
-  transition:0.2s;
-}
-.back:hover { opacity:1; color:#818cf8; }
-footer { text-align:center; padding:40px 0; color:#6b7280; font-size:14px; }
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(20px);}
-  to {opacity:1; transform:translateY(0);}
+
+footer{
+  text-align:center;
+  padding:40px;
+  color:#6b7280;
 }
 </style>
 </head>
+
 <body>
 
 <nav>
   <strong>ERG Blog</strong>
-  <div>
-    <a onclick="showHome()">首頁</a>
-    <a onclick="showPosts()">文章</a>
-    <a onclick="scrollToSites()">我的網站</a>
-  </div>
+
+  <ul class="nav-menu">
+    <li><a href="#">首頁</a></li>
+    <li><a href="#">文章</a></li>
+
+    <!-- 我的網站 Hover 下拉 -->
+    <li class="dropdown">
+      <span class="dropdown-title">我的網站 ▾</span>
+      <ul class="dropdown-menu">
+        <li><a href="https://example.com/lottery" target="_blank">🎲 抽籤系統</a></li>
+        <li><a href="https://example.com/checkin" target="_blank">✅ 簽到系統</a></li>
+        <li><a href="https://example.com/game" target="_blank">🎮 課堂遊戲</a></li>
+        <li><a href="https://example.com/seat" target="_blank">🪑 座位系統</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 
 <div class="container">
-
-<section id="home">
   <div class="hero">
     <h1>你好，我是 <span>ERG</span></h1>
-    <p>教育 × 網站設計 × 課堂互動系統</p>
+    <p>教育 × 課堂互動 × 系統設計</p>
   </div>
-</section>
 
-<section id="posts" class="hidden">
-  <h2>文章列表</h2>
   <div class="grid">
-    <div class="card" onclick="openPost(1)"><h3>如何設計老師一秒就能用的互動系統</h3><p>2026-01-05</p></div>
-    <div class="card" onclick="openPost(2)"><h3>為什麼課堂系統一定要支援離線</h3><p>2026-01-02</p></div>
+    <div class="card">
+      <h3>關於我</h3>
+      <p>專注於讓老師一秒就能用的課堂系統。</p>
+    </div>
+    <div class="card">
+      <h3>部落格</h3>
+      <p>分享教育現場與系統設計經驗。</p>
+    </div>
   </div>
-</section>
-
-<section id="sites" class="hidden">
-  <h2>我的網站作品</h2>
-  <div class="grid">
-    <div class="card" onclick="openSite('https://example.com/1')"><h3>🎲 抽籤系統</h3><p>課堂即用・全螢幕動畫</p></div>
-    <div class="card" onclick="openSite('https://example.com/2')"><h3>✅ 簽到系統</h3><p>平板超大字・離線可用</p></div>
-  </div>
-</section>
-
-<section id="article" class="hidden">
-  <span class="back" onclick="showPosts()">← 返回文章</span>
-  <article>
-    <h2 id="article-title"></h2>
-    <p id="article-content"></p>
-  </article>
-</section>
-
 </div>
 
 <footer>© 2026 ERG Blog</footer>
-
-<script>
-const postsData = {
-  1: {title:'如何設計老師一秒就能用的互動系統', content:'文章內容示範 1'},
-  2: {title:'為什麼課堂系統一定要支援離線', content:'文章內容示範 2'}
-};
-
-const home = document.getElementById('home');
-const posts = document.getElementById('posts');
-const sites = document.getElementById('sites');
-const article = document.getElementById('article');
-const articleTitle = document.getElementById('article-title');
-const articleContent = document.getElementById('article-content');
-
-function showHome(){ home.classList.remove('hidden'); posts.classList.add('hidden'); sites.classList.add('hidden'); article.classList.add('hidden');}
-function showPosts(){ home.classList.add('hidden'); posts.classList.remove('hidden'); sites.classList.add('hidden'); article.classList.add('hidden');}
-function scrollToSites(){ home.classList.add('hidden'); posts.classList.add('hidden'); sites.classList.remove('hidden'); article.classList.add('hidden'); sites.scrollIntoView({behavior:'smooth', block:'start'});}
-function openPost(id){ articleTitle.innerText = postsData[id].title; articleContent.innerText = postsData[id].content; home.classList.add('hidden'); posts.classList.add('hidden'); sites.classList.add('hidden'); article.classList.remove('hidden');}
-function openSite(url){ window.open(url,'_blank'); }
-
-showHome();
-</script>
 
 </body>
 </html>
