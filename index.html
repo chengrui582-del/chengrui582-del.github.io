@@ -30,9 +30,27 @@ nav a {
   color:#e5e7eb;
   text-decoration:none;
   opacity:0.8;
+  position:relative;
   transition:0.2s;
 }
-nav a:hover { opacity:1; color:#818cf8; }
+/* hover 動畫 */
+nav a::after {
+  content:'';
+  position:absolute;
+  width:0;
+  height:2px;
+  left:0;
+  bottom:-4px;
+  background:#818cf8;
+  transition:width 0.3s ease;
+}
+nav a:hover {
+  opacity:1;
+  color:#818cf8;
+}
+nav a:hover::after {
+  width:100%;
+}
 .container {
   max-width:1100px;
   margin:auto;
@@ -116,7 +134,7 @@ footer { text-align:center; padding:40px 0; color:#6b7280; font-size:14px; }
 <section id="sites" class="hidden">
   <h2>我的網站作品</h2>
   <div class="grid">
-    <div class="card" onclick="openSite('https://chengrui582-del.github.io/60305/')"><h3>🎲 抽籤系統</h3><p>課堂即用・全螢幕動畫</p></div>
+    <div class="card" onclick="openSite('https://example.com/1')"><h3>🎲 抽籤系統</h3><p>課堂即用・全螢幕動畫</p></div>
     <div class="card" onclick="openSite('https://example.com/2')"><h3>✅ 簽到系統</h3><p>平板超大字・離線可用</p></div>
   </div>
 </section>
