@@ -3,47 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERG 部落格測試版</title>
+<title>ERG 個人部落格</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body { margin:0; font-family:sans-serif; background:#111; color:#fff; text-align:center; padding:20px; }
-a { color:#818cf8; cursor:pointer; text-decoration:none; }
-.card { background:#222; padding:24px; margin:16px; border-radius:12px; cursor:pointer; display:inline-block; }
-section { margin-top:40px; }
+body {
+  margin:0;
+  font-family:'Noto Sans TC', sans-serif;
+  background: linear-gradient(135deg,#0f172a,#020617);
+  color:#e5e7eb;
+}
+nav {
+  position:sticky;
+  top:0;
+  background: rgba(2,6,23,0.95);
+  padding: 16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:10;
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid #1f2933;
+}
+nav a {
+  margin-left:16px;
+  cursor:pointer;
+  color:#e5e7eb;
+  text-decoration:none;
+  opacity:0.8;
+  transition:0.2s;
+}
+nav a:hover { opacity:1; color:#818cf8; }
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:48px 24px;
+}
+.hidden { display:none; }
+.hero {
+  text-align:center;
+  margin-bottom:64px;
+  animation: fadeIn 1s ease;
+}
+.hero h1 { font-size:48px; margin-bottom:12px; }
+.hero span { color:#818cf8; }
+.hero p { color:#9ca3af; font-size:18px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+.card {
+  background: rgba(15,23,42,0.85);
+  border:1px solid #1f2937;
+  border-radius:16px;
+  padding:24px;
+  cursor:pointer;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform:translateY(-5px);
+  border-color:#6366f1;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+.card h3 { margin-top:0; font-size:20px; }
+.card p { color:#9ca3af; font-size:14px; }
+article {
+  max-width:800px;
+  margin:auto;
+  line-height:1.8;
+  animation: fadeIn 0.8s ease;
+}
+article h2 { font-size:36px; margin-bottom:12px; }
+.back {
+  display:inline-block;
+  margin-bottom:24px;
+  opacity:0.8;
+  cursor:pointer;
+  transition:0.2s;
+}
+.back:hover { opacity:1; color:#818cf8; }
+footer { text-align:center; padding:40px 0; color:#6b7280; font-size:14px; }
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 <body>
 
-<h1>ERG 個人部落格測試版</h1>
-<p>這是保證可顯示的簡化版本，所有互動都能正常運作。</p>
-
 <nav>
-  <a onclick="showHome()">首頁</a> |
-  <a onclick="showPosts()">文章</a> |
-  <a onclick="scrollToSites()">我的網站</a>
+  <strong>ERG Blog</strong>
+  <div>
+    <a onclick="showHome()">首頁</a>
+    <a onclick="showPosts()">文章</a>
+    <a onclick="scrollToSites()">我的網站</a>
+  </div>
 </nav>
 
+<div class="container">
+
 <section id="home">
-  <h2>首頁</h2>
-  <p>歡迎來到我的個人部落格！</p>
+  <div class="hero">
+    <h1>你好，我是 <span>ERG</span></h1>
+    <p>教育 × 網站設計 × 課堂互動系統</p>
+  </div>
 </section>
 
 <section id="posts" class="hidden">
   <h2>文章列表</h2>
-  <div class="card" onclick="openPost(1)">文章 1</div>
-  <div class="card" onclick="openPost(2)">文章 2</div>
+  <div class="grid">
+    <div class="card" onclick="openPost(1)"><h3>如何設計老師一秒就能用的互動系統</h3><p>2026-01-05</p></div>
+    <div class="card" onclick="openPost(2)"><h3>為什麼課堂系統一定要支援離線</h3><p>2026-01-02</p></div>
+  </div>
 </section>
 
 <section id="sites" class="hidden">
   <h2>我的網站作品</h2>
-  <div class="card" onclick="openSite('https://example.com/1')">作品 1</div>
-  <div class="card" onclick="openSite('https://example.com/2')">作品 2</div>
+  <div class="grid">
+    <div class="card" onclick="openSite('https://example.com/1')"><h3>🎲 抽籤系統</h3><p>課堂即用・全螢幕動畫</p></div>
+    <div class="card" onclick="openSite('https://example.com/2')"><h3>✅ 簽到系統</h3><p>平板超大字・離線可用</p></div>
+  </div>
 </section>
 
 <section id="article" class="hidden">
-  <span class="card" onclick="showPosts()">← 返回文章</span>
-  <h2 id="article-title"></h2>
-  <p id="article-content"></p>
+  <span class="back" onclick="showPosts()">← 返回文章</span>
+  <article>
+    <h2 id="article-title"></h2>
+    <p id="article-content"></p>
+  </article>
 </section>
+
+</div>
+
+<footer>© 2026 ERG Blog</footer>
 
 <script>
 const postsData = {
@@ -60,11 +148,10 @@ const articleContent = document.getElementById('article-content');
 
 function showHome(){ home.classList.remove('hidden'); posts.classList.add('hidden'); sites.classList.add('hidden'); article.classList.add('hidden');}
 function showPosts(){ home.classList.add('hidden'); posts.classList.remove('hidden'); sites.classList.add('hidden'); article.classList.add('hidden');}
-function scrollToSites(){ home.classList.add('hidden'); posts.classList.add('hidden'); sites.classList.remove('hidden'); article.classList.add('hidden');}
+function scrollToSites(){ home.classList.add('hidden'); posts.classList.add('hidden'); sites.classList.remove('hidden'); article.classList.add('hidden'); sites.scrollIntoView({behavior:'smooth', block:'start'});}
 function openPost(id){ articleTitle.innerText = postsData[id].title; articleContent.innerText = postsData[id].content; home.classList.add('hidden'); posts.classList.add('hidden'); sites.classList.add('hidden'); article.classList.remove('hidden');}
 function openSite(url){ window.open(url,'_blank'); }
 
-// 初始顯示首頁
 showHome();
 </script>
 
