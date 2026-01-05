@@ -90,21 +90,23 @@
 <footer>© 2026 ERG Blog</footer>
 
 <script>
-  const posts = {
-    1: { title: "如何設計老師一秒就能用的互動系統", date: "2026-01-05", content: `這篇文章分享我在教學現場設計互動系統的核心原則：<br><br>1️⃣ 超大字、零學習成本<br>2️⃣ 平板優先<br>3️⃣ 所有操作不超過兩步<br><br>這些原則被我實際用在抽籤、簽到、分組與課堂遊戲中。` },
-    2: { title: "為什麼課堂系統一定要支援離線", date: "2026-01-02", content: `學校最常見的不是技術問題，而是沒有網路。<br><br>所以我設計的系統：<br>✔ 可單機使用<br>✔ 不用登入<br>✔ 不依賴雲端` }
-  };
+  document.addEventListener('DOMContentLoaded', () => {
+    const posts = {
+      1: { title: "如何設計老師一秒就能用的互動系統", date: "2026-01-05", content: `這篇文章分享我在教學現場設計互動系統的核心原則：<br><br>1️⃣ 超大字、零學習成本<br>2️⃣ 平板優先<br>3️⃣ 所有操作不超過兩步<br><br>這些原則被我實際用在抽籤、簽到、分組與課堂遊戲中。` },
+      2: { title: "為什麼課堂系統一定要支援離線", date: "2026-01-02", content: `學校最常見的不是技術問題，而是沒有網路。<br><br>所以我設計的系統：<br>✔ 可單機使用<br>✔ 不用登入<br>✔ 不依賴雲端` }
+    };
 
-  const home = document.getElementById('home');
-  const postsSection = document.getElementById('posts');
-  const article = document.getElementById('article');
-  const sites = document.getElementById('sites');
+    const home = document.getElementById('home');
+    const postsSection = document.getElementById('posts');
+    const article = document.getElementById('article');
+    const sites = document.getElementById('sites');
 
-  function showHome() { home.hidden = false; postsSection.hidden = true; article.hidden = true; sites.hidden = true; }
-  function showPosts() { home.hidden = true; postsSection.hidden = false; article.hidden = true; sites.hidden = true; }
-  function scrollToSites() { home.hidden = true; postsSection.hidden = true; article.hidden = true; sites.hidden = false; sites.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  function openPost(id) { const post = posts[id]; document.getElementById('article-title').innerText = post.title; document.getElementById('article-date').innerText = post.date; document.getElementById('article-content').innerHTML = post.content; home.hidden = true; postsSection.hidden = true; article.hidden = false; sites.hidden = true; }
-  function openSite(url) { window.open(url, '_blank'); }
+    window.showHome = () => { home.hidden = false; postsSection.hidden = true; article.hidden = true; sites.hidden = true; }
+    window.showPosts = () => { home.hidden = true; postsSection.hidden = false; article.hidden = true; sites.hidden = true; }
+    window.scrollToSites = () => { home.hidden = true; postsSection.hidden = true; article.hidden = true; sites.hidden = false; sites.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    window.openPost = (id) => { const post = posts[id]; document.getElementById('article-title').innerText = post.title; document.getElementById('article-date').innerText = post.date; document.getElementById('article-content').innerHTML = post.content; home.hidden = true; postsSection.hidden = true; article.hidden = false; sites.hidden = true; }
+    window.openSite = (url) => { window.open(url, '_blank'); }
+  });
 </script>
 
 </body>
