@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERG 個人部落格</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: #e5e7eb;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(2,6,23,0.75);
+      border-bottom: 1px solid #1f2933;
+      z-index: 10;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-links a {
+      margin-left: 16px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    .nav-links a:hover { opacity: 1; color: #818cf8; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: auto; padding: 48px 24px; }
+    .hidden { display: none; }
+
+    /* Hero */
+    .hero { text-align: center; margin-bottom: 64px; }
+    .hero h1 { font-size: 48px; margin-bottom: 12px; }
+    .hero span { color: #818cf8; }
+    .hero p { color: #9ca3af; }
+
+    /* Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 24px; }
+    .card {
+      background: rgba(15,23,42,0.8);
+      border: 1px solid #1f2937;
+      border-radius: 16px;
+      padding: 24px;
+      transition: transform .2s, border .2s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-4px); border-color: #6366f1; }
+    .card h3 { margin-top: 0; }
+    .card p { color: #9ca3af; font-size: 14px; }
+
+    /* Article */
+    article { max-width: 800px; margin: auto; line-height: 1.8; }
+    article h1 { font-size: 36px; }
+    article .date { color: #9ca3af; font-size: 14px; margin-bottom: 24px; }
+    .back { margin-bottom: 24px; display: inline-block; opacity: 0.8; }
+    .back:hover { opacity: 1; color: #818cf8; }
+
+    footer { text-align: center; padding: 40px 0; color: #6b7280; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <strong>ERG Blog</strong>
+    <div class="nav-links">
+      <a href="#" onclick="showHome()">首頁</a>
+      <a href="#" onclick="showPosts()">文章</a>
+      <a href="#" onmouseenter="scrollToSites()">我的網站</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Home -->
+  <section id="home">
+    <div class="hero">
+      <h1>你好，我是 <span>ERG</span></h1>
+      <p>教育 × 網站設計 × 課堂互動系統</p>
+    </div>
+  </section>
+
+  <!-- Posts -->
+  <section id="posts" class="hidden">
+    <div class="grid">
+      <div class="card" onclick="openPost(1)">
+        <h3>如何設計老師一秒就能用的互動系統</h3>
+        <p>2026-01-05</p>
+      </div>
+      <div class="card" onclick="openPost(2)">
+        <h3>為什麼課堂系統一定要支援離線</h3>
+        <p>2026-01-02</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sites -->
+  <section id="sites" class="hidden">
+    <h2 style="margin-bottom:24px">我的網站作品</h2>
+    <div class="grid">
+      <div class="card" onclick="openSite('https://your-site-url-1')"><h3>🎲 抽籤系統</h3><p>課堂即用・全螢幕動畫</p></div>
+      <div class="card" onclick="openSite('https://your-site-url-2')"><h3>✅ 簽到系統</h3><p>平板超大字・離線可用</p></div>
+      <div class="card" onclick="openSite('https://your-site-url-3')"><h3>👥 分組 / 座位</h3><p>自動避開規則・匯出</p></div>
+    </div>
+  </section>
+
+  <!-- Article -->
+  <section id="article" class="hidden">
+    <a class="back" href="#" onclick="showPosts()">← 返回文章</a>
+    <article>
+      <h1 id="article-title"></h1>
+      <div class="date" id="article-date"></div>
+      <div id="article-content"></div>
+    </article>
+  </section>
+
+</div>
+
+<footer>© 2026 ERG Blog</footer>
+
+<script>
+  const posts = {
+    1: {
+      title: "如何設計老師一秒就能用的互動系統",
+      date: "2026-01-05",
+      content: `這篇文章分享我在教學現場設計互動系統的核心原則：<br><br>
+      1️⃣ 超大字、零學習成本<br>
+      2️⃣ 平板優先<br>
+      3️⃣ 所有操作不超過兩步<br><br>
+      這些原則被我實際用在抽籤、簽到、分組與課堂遊戲中。`
+    },
+    2: {
+      title: "為什麼課堂系統一定要支援離線",
+      date: "2026-01-02",
+      content: `學校最常見的不是技術問題，而是沒有網路。<br><br>
+      所以我設計的系統：<br>
+      ✔ 可單機使用<br>
+      ✔ 不用登入<br>
+      ✔ 不依賴雲端`
+    }
+  };
+
+  function showHome() {
+    home.hidden = false;
+    postsSection.hidden = true;
+    article.hidden = true;
+  }
+  function showPosts() {
+    home.hidden = true;
+    postsSection.hidden = false;
+    article.hidden = true;
+  }
+  function scrollToSites() {
+    home.hidden = true;
+    postsSection.hidden = true;
+    article.hidden = true;
+    sites.hidden = false;
+    sites.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function openSite(url) {
+    window.open(url, '_blank');
+  });
+  }
+
+  function openPost(id) {
+    const post = posts[id];
+    document.getElementById('article-title').innerText = post.title;
+    document.getElementById('article-date').innerText = post.date;
+    document.getElementById('article-content').innerHTML = post.content;
+    home.hidden = true;
+    postsSection.hidden = true;
+    article.hidden = false;
+  }
+
+  const home = document.getElementById('home');
+  const postsSection = document.getElementById('posts');
+  const article = document.getElementById('article');
+  const sites = document.getElementById('sites');
+</script>
+
+</body>
+</html>
+
